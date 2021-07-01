@@ -75,6 +75,7 @@ export default class UpdateStory extends Observer {
       const updIndex = appState.get().stories.findIndex(story => story.id === updatingStory.id);
 
       updatingStory.user = appState.get().stories[updIndex].user;
+      updatingStory.createdAt = appState.get().stories[updIndex].createdAt;
 
       if(updIndex === -1) {
         console.log('oh no');
