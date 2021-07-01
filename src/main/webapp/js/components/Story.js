@@ -15,7 +15,7 @@ export default class Story extends Observer {
         return `<div class="d-flex justify-content-end mb-4">
         <div ondblclick=openUpdate(${story.id}) class="msg_cotainer_send">
           <p class="font-weight-bold">${story.title}</p>
-          <hr>${story.content}<span class="msg_time_send">Today</span>
+          <hr>${story.content}<span class="msg_time_send">${`${story.createdAt.toString().split(' ')[1]} ${story.createdAt.toString().split(' ')[2]} ${story.createdAt.toString().match(/(?:[01]\d|2[0-3]):(?:[0-5]\d):(?:[0-5]\d)/)}`}</span>
           <span onclick="deleteStory(${story.id})" class="delete_btn"><i class="fas fa-trash"></i></span>
         </div>
         <div class="img_cont_msg">
@@ -32,7 +32,7 @@ export default class Story extends Observer {
       </div>
       <div class="msg_cotainer">
         <p class="font-weight-bold">${story.title}</p>
-        <hr> ${story.content} <span class="msg_time">Today</span>
+        <hr> ${story.content} <span class="msg_time">${`${story.createdAt.toString().split(' ')[1]} ${story.createdAt.toString().split(' ')[2]} ${story.createdAt.toString().match(/(?:[01]\d|2[0-3]):(?:[0-5]\d):(?:[0-5]\d)/)}`}</span>
       </div>
     </div>`;
      })}
