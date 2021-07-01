@@ -15,7 +15,6 @@ export default class Header {
   <span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
   <div id="menu" class="action_menu">
   <ul>
-    <li><i class="fas fa-user-circle"></i>Update Profile</li>
     <li><i class="fas fa-ban"></i>Logout</li>
   </ul>
   </div>`;

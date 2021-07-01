@@ -250,3 +250,8 @@
 	cursor: pointer;
 	margin-left: 10px;
 }
+
+.modal-backdrop
+{
+    opacity:0.5 !important;
+}
