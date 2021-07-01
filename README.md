@@ -1,4 +1,4 @@
-# Chetto
+# Short-twee
 A real-time public tweet web application.
 
 ## Goal
