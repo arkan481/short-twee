@@ -100,13 +100,30 @@
 			height: 70px;
 			width: 70px;
 			border:1.5px solid #f5f6fa;
+			background-color: rgb(119, 58, 58);
+			display: flex;
+			justify-content: center;
+			align-items: center;
 		
 		}
 		.user_img_msg{
 			height: 40px;
 			width: 40px;
 			border:1.5px solid #f5f6fa;
-		
+			background-color: rgb(119, 58, 58);
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.sent_img_msg{
+			height: 40px;
+			width: 40px;
+			border:1.5px solid #f5f6fa;
+			background-color: rgb(10, 73, 133);
+			display: flex;
+			justify-content: center;
+			align-items: center;
 		}
 	.img_cont{
 			position: relative;

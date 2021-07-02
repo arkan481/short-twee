@@ -1,3 +1,5 @@
+import { deleteCookie } from './Cookie.js'
+
 export default class User {
 
   constructor(user) {
@@ -11,6 +13,15 @@ export default class User {
   createInstance(user) {
     // TODO: FIND OUT IF CLASS.variablename is the same as defining in constructor variable
     User.instance = user;
+    User.instance.logout = function() {
+      deleteCookie('userId', '/', location.hostname);
+      User.initialize();
+      window.location.replace("/src/main/webapp/login.html");
+    }
+  }
+
+  static initialize() {
+    User.instance = null;
   }
 
 }

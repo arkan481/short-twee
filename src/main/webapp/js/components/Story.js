@@ -11,7 +11,7 @@ export default class Story extends Observer {
     const currentUserId = currentState.user.id;
     return `<div>
     ${currentState.stories.map(story => { 
-      if(story.user.id === currentUserId) {
+      if(story.user.id !== currentUserId) {
         return `<div class="d-flex justify-content-end mb-4">
         <div ondblclick=openUpdate(${story.id}) class="msg_cotainer_send">
           <p class="font-weight-bold">${story.title}</p>
@@ -19,16 +19,16 @@ export default class Story extends Observer {
           <span onclick="deleteStory(${story.id})" class="delete_btn"><i class="fas fa-trash"></i></span>
         </div>
         <div class="img_cont_msg">
-          <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
-            class="rounded-circle user_img_msg">
+          <div src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
+            class="rounded-circle user_img_msg text-white">${story.user.name.toUpperCase().charAt('0')}</div>
         </div>
         </div>`;
       }
 
       return `<div class="d-flex justify-content-start mb-4">
       <div class="img_cont_msg">
-        <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
-          class="rounded-circle user_img_msg">
+        <div
+          class="rounded-circle sent_img_msg text-white">${story.user.name.toUpperCase().charAt('0')}</div>
       </div>
       <div class="msg_cotainer">
         <p class="font-weight-bold">${story.title}</p>
