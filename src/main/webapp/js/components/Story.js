@@ -11,7 +11,7 @@ export default class Story extends Observer {
     const currentUserId = currentState.user.id;
     return `<div>
     ${currentState.stories.map(story => { 
-      if(story.user.id !== currentUserId) {
+      if(story.user.id === currentUserId) {
         return `<div class="d-flex justify-content-end mb-4">
         <div ondblclick=openUpdate(${story.id}) class="msg_cotainer_send">
           <p class="font-weight-bold">${story.title}</p>

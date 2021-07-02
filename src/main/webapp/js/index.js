@@ -1,11 +1,11 @@
 import State from "./lib/State.js";
-import User from './lib/User.js';
-import { getCookie } from "./lib/Cookie.js";
+import User from "./lib/User.js";
 
 import Header from "./components/Header.js";
 import Form from "./components/Form.js";
 import Story from "./components/Story.js";
 import UpdateStory from "./components/UpdateStory.js";
+import Firebase from "./lib/Firebase.js";
 
 const AppState = new State();
 
@@ -13,20 +13,21 @@ const header = new Header(AppState);
 const form = new Form(AppState);
 const story = new Story(AppState);
 const updateStory = new UpdateStory(AppState);
-
-const userId = getCookie('userId');
-
-if(!userId) {
-  // FIXME: USE DYNAMIC ROUTE
-  window.location.replace("/src/main/webapp/login.html");
-}
-
-const user = new User({ id: userId, name: 'Arkan' });
+const auth = Firebase.getAuthInstance();
 
 AppState.subscribe(story);
+AppState.subscribe(header);
 
-AppState.update({ user, stories: [] });
+AppState.update({ user: { name: "loading...", id: 0 }, stories: [] });
 
-header.render('header-container');
-form.render('form-container');
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    const currentUser = new User({ id: user.uid, name: user.email });
+    AppState.update({ user: currentUser, stories: [] });
+  } else {
+    window.location.replace("./login.html");
+  }
+});
+
+form.render("form-container");
 updateStory.render();

@@ -1,17 +1,18 @@
-import { setCookie } from './lib/Cookie.js'
+import Firebase from "./lib/Firebase.js";
 
-document.getElementById('login-form').addEventListener('submit', e => {
+const auth = Firebase.getAuthInstance();
+
+document.getElementById("login-form").addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const el = e.target;
-  const username = el.username.value;
+  const email = el.username.value;
   const password = el.password.value;
 
-  if(username === 'arkan' && password === 'haryo') {
-    setCookie('userId', 100, 30);
-    window.location.replace("/src/main/webapp/index.html");
-  } else {
-    alert('wrong credentials!');
+  try {
+    await auth.signInWithEmailAndPassword(email, password);
+    window.location.replace("./index.html");
+  } catch (error) {
+    alert(error.message);
   }
-
 });

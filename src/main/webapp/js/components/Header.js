@@ -1,6 +1,9 @@
-export default class Header {
+import Observer from "../lib/Observer.js";
+
+export default class Header extends Observer {
 
   constructor(currentState = {}) {
+    super();
     this.appState = currentState;
   }
   
@@ -24,10 +27,10 @@ export default class Header {
   </div>`;
   }
 
-  render(idSelector) {
+  render(currentState, idSelector) {
     // TODO: IMPLEMENT USER AUTH AND PASS THE PARAM
 
-    const template = this.createTemplate(this.appState.get().user);
+    const template = this.createTemplate(currentState.user);
     const parent = document.getElementById(idSelector);
 
     parent.innerHTML = template;
@@ -44,6 +47,10 @@ export default class Header {
     document.getElementById('logout-btn').addEventListener('click', e => {
       this.appState.get().user.logout();
     });
+  }
+
+  update(currentState) {
+    this.render(currentState, "header-container");
   }
 
 }

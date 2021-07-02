@@ -1,16 +1,22 @@
-import { setCookie } from './lib/Cookie.js'
+import Firebase from "./lib/Firebase.js";
 
-document.getElementById('signup-form').addEventListener('submit', e => {
+const auth = Firebase.getAuthInstance();
+
+document.getElementById("signup-form").addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const el = e.target;
-  const username = el.username.value;
+  const email = el.username.value;
   const password = el.password.value;
 
-  if(username.length > 5 && password.length > 8) {
-    setCookie('userId', 100, 30);
-    window.location.replace("/src/main/webapp/index.html");
+  if (password.length > 8) {
+    try {
+      await auth.createUserWithEmailAndPassword(email, password);
+      window.location.replace("./index.html");
+    } catch (error) {
+      alert(error.message);
+    }
   } else {
-    alert('username should be more than 5 characters long and password should be more than 8 characters long!');
+    alert("password should be more than 8 characters long!");
   }
 });
