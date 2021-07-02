@@ -4,7 +4,7 @@ export default class Firebase {
       this.initializeFirebase();
     }
 
-    return firebase;
+    return Firebase.instance;
   }
 
   initializeFirebase() {
@@ -22,15 +22,16 @@ export default class Firebase {
     };
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
+
+    Firebase.instance = firebase;
   }
 
    static getInstance() {
-    let instance;
     if(!Firebase.instance) {
-      instance = new Firebase();
+      new Firebase();
     }
 
-    return instance;
+    return Firebase.instance;
   }
 
   static getDatabaseInstance() {
