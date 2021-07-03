@@ -29,5 +29,27 @@ auth.onAuthStateChanged((user) => {
   }
 });
 
+Firebase.getDatabaseInstance()
+  .ref("stories")
+  .on("value", (snap) => {
+    const results = snap.val();
+
+    if (results) {
+      let stories = [];
+
+      Object.keys(results).forEach((key) => {
+        stories.push({
+          id: key,
+          title: results[key].title,
+          content: results[key].content,
+          user: results[key].user,
+          createdAt: results[key].createdAt,
+        });
+      });
+
+      AppState.update({ stories });
+    }
+  });
+
 form.render("form-container");
 updateStory.render();

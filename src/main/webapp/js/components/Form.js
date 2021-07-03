@@ -75,24 +75,24 @@ export default class Form {
           title,
           content,
           user: { id: user.id, name: user.name },
-          createdAt: new Date(),
+          createdAt: new Date().toString(),
         });
 
-        const stories = [
-          ...currentState.stories,
-          {
-            id: autoId,
-            title,
-            content,
-            user,
-            createdAt: new Date(),
-          },
-        ];
+        // const stories = [
+        //   ...currentState.stories,
+        //   {
+        //     id: autoId,
+        //     title,
+        //     content,
+        //     user,
+        //     createdAt: new Date(),
+        //   },
+        // ];
 
         el.title.value = "";
         el.content.value = "";
 
-        this.appState.update({ user, stories });
+        // this.appState.update({ user, stories });
       } catch (error) {
         alert(error.message);
       }
