@@ -1,5 +1,7 @@
 import Observer from "../lib/Observer.js";
 
+import Firebase from "../lib/Firebase.js";
+
 export default class Story extends Observer {
 
   constructor(currentState = {}) { 
@@ -16,7 +18,7 @@ export default class Story extends Observer {
         <div ondblclick=openUpdate(${story.id}) class="msg_cotainer_send">
           <p class="font-weight-bold">${story.title}</p>
           <hr>${story.content}<span class="msg_time_send">${`${story.createdAt.toString().split(' ')[1]} ${story.createdAt.toString().split(' ')[2]} ${story.createdAt.toString().match(/(?:[01]\d|2[0-3]):(?:[0-5]\d):(?:[0-5]\d)/)}`}</span>
-          <span onclick="deleteStory(${story.id})" class="delete_btn"><i class="fas fa-trash"></i></span>
+          <span onclick="deleteStory('${story.id}')" class="delete_btn"><i class="fas fa-trash"></i></span>
         </div>
         <div class="img_cont_msg">
           <div src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
@@ -54,11 +56,7 @@ export default class Story extends Observer {
 
   bindEvents(appState) {
     window.deleteStory = function (id) {
-      const currentState = appState.get();
-
-      const stories = currentState.stories.filter(story => story.id !== id);
-
-      appState.update({ stories });
+      Firebase.getDatabaseInstance().ref('stories').child(`${id}`).remove();
     }
   }
 }
