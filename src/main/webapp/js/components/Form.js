@@ -67,7 +67,6 @@ export default class Form {
         return;
       }
 
-      // TODO: SAVE TO FIREBASE
       try {
         const storiesRef = Firebase.getDatabaseInstance().ref("stories");
         const autoId = await storiesRef.push().key;

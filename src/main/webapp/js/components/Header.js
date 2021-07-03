@@ -28,8 +28,6 @@ export default class Header extends Observer {
   }
 
   render(currentState, idSelector) {
-    // TODO: IMPLEMENT USER AUTH AND PASS THE PARAM
-
     const template = this.createTemplate(currentState.user);
     const parent = document.getElementById(idSelector);
 
