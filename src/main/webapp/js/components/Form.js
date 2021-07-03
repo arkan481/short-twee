@@ -1,5 +1,6 @@
-export default class Form {
+import Firebase from "../lib/Firebase.js";
 
+export default class Form {
   constructor(currentState = {}) {
     this.appState = currentState;
   }
@@ -36,7 +37,7 @@ export default class Form {
     this.bindEvents();
   }
 
-  showAlert(message, timeOut = 3000, idSelector = 'alert') {
+  showAlert(message, timeOut = 3000, idSelector = "alert") {
     const alert = `<div class="alert alert-danger" role="alert">
       ${message}
     </div>`;
@@ -47,10 +48,9 @@ export default class Form {
     }, timeOut);
   }
 
-  // TODO: IMPLEMENT BIND CLICK
   bindEvents() {
-    const form = document.getElementById('post-form');
-    form.addEventListener('submit', e => {
+    const form = document.getElementById("post-form");
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
       const currentState = this.appState.get();
@@ -60,21 +60,42 @@ export default class Form {
       const content = el.content.value;
       const user = currentState.user;
 
-      if(!title || !content || !user) {
-        this.showAlert('Please fill out the title and the content of the story!');
+      if (!title || !content || !user) {
+        this.showAlert(
+          "Please fill out the title and the content of the story!"
+        );
         return;
       }
 
-      const stories = [...currentState.stories, { id: currentState.stories.length++, title, content, user, createdAt: new Date() }];
-
-      el.title.value = "";
-      el.content.value = "";
-
       // TODO: SAVE TO FIREBASE
+      try {
+        const storiesRef = Firebase.getDatabaseInstance().ref("stories");
+        const autoId = await storiesRef.push().key;
+        storiesRef.child(autoId).set({
+          title,
+          content,
+          user: { id: user.id, name: user.name },
+          createdAt: new Date(),
+        });
 
-      this.appState.update({ user, stories });
-      
+        const stories = [
+          ...currentState.stories,
+          {
+            id: autoId,
+            title,
+            content,
+            user,
+            createdAt: new Date(),
+          },
+        ];
+
+        el.title.value = "";
+        el.content.value = "";
+
+        this.appState.update({ user, stories });
+      } catch (error) {
+        alert(error.message);
+      }
     });
   }
-
 }
