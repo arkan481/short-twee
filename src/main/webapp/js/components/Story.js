@@ -15,7 +15,7 @@ export default class Story extends Observer {
     ${currentState.stories.map(story => { 
       if(story.user.id === currentUserId) {
         return `<div class="d-flex justify-content-end mb-4">
-        <div ondblclick=openUpdate(${story.id}) class="msg_cotainer_send">
+        <div ondblclick=openUpdate('${story.id}') class="msg_cotainer_send">
           <p class="font-weight-bold">${story.title}</p>
           <hr>${story.content}<span class="msg_time_send">${`${story.createdAt.toString().split(' ')[1]} ${story.createdAt.toString().split(' ')[2]} ${story.createdAt.toString().match(/(?:[01]\d|2[0-3]):(?:[0-5]\d):(?:[0-5]\d)/)}`}</span>
           <span onclick="deleteStory('${story.id}')" class="delete_btn"><i class="fas fa-trash"></i></span>

@@ -1,5 +1,7 @@
 import Observer from "../lib/Observer.js";
 
+import Firebase from "../lib/Firebase.js";
+
 export default class UpdateStory extends Observer {
 
   constructor(currentState = {}) {
@@ -62,32 +64,35 @@ export default class UpdateStory extends Observer {
       document.getElementById('story-content').value = updStory.content;
     }
 
-    document.getElementById('upd-form').addEventListener('submit', e => {
+    document.getElementById('upd-form').addEventListener('submit', async e => {
       e.preventDefault();
 
-
       const updatingStory = {
-        id: parseInt(document.getElementById('story-id').value),
+        id: document.getElementById('story-id').value,
         title: document.getElementById('story-title').value,
         content: document.getElementById('story-content').value
       }
 
       const updIndex = appState.get().stories.findIndex(story => story.id === updatingStory.id);
 
-      updatingStory.user = appState.get().stories[updIndex].user;
-      updatingStory.createdAt = appState.get().stories[updIndex].createdAt;
-
       if(updIndex === -1) {
-        console.log('oh no');
+        alert('something went really wrong :(');
         return;
       }
 
-      const stories = appState.get().stories;
+      updatingStory.user = appState.get().stories[updIndex].user;
+      updatingStory.createdAt = appState.get().stories[updIndex].createdAt;
 
-      // FIXME: RAT RACE?
-      stories.splice(updIndex, 1, updatingStory);
-
-      appState.update({ stories });
+      // TODO: UPDATE OPERATION
+      /**
+       * Details
+       * 
+       * @asignee       Saga
+       * @DatabaseRef   stories
+       * @Task          Write firebase update function to update the database
+       * @Notes         Use the @var updatingStory variable to fetch the updated data, 
+       *                and query the database to udpate its value.
+       */
 
       document.getElementById('story-id').value = null;
       document.getElementById('story-title').value = '';
