@@ -48,6 +48,8 @@ Firebase.getDatabaseInstance()
       });
 
       AppState.update({ stories });
+    } else {
+      AppState.update({ stories: [] });
     }
   });
 
