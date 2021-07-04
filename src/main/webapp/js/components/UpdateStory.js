@@ -83,7 +83,6 @@ export default class UpdateStory extends Observer {
       updatingStory.user = appState.get().stories[updIndex].user;
       updatingStory.createdAt = appState.get().stories[updIndex].createdAt;
 
-      // TODO: UPDATE OPERATION
       /**
        * Details
        * 
@@ -94,11 +93,18 @@ export default class UpdateStory extends Observer {
        *                and query the database to udpate its value.
        */
 
-      document.getElementById('story-id').value = null;
-      document.getElementById('story-title').value = '';
-      document.getElementById('story-content').value = '';
+      try {
+        const storiesRef = Firebase.getDatabaseInstance().ref('stories');
+        await storiesRef.child(updatingStory.id).set(updatingStory);
 
-      $('#upd-modal').modal('toggle');
+        document.getElementById('story-id').value = null;
+        document.getElementById('story-title').value = '';
+        document.getElementById('story-content').value = '';
+  
+        $('#upd-modal').modal('toggle');
+      } catch (error) {
+        alert(error.message);
+      }
 
     });
   }
